@@ -1,4 +1,9 @@
-To run benchmark please edit 'TEST_FILE_NAME' and 'BENCHMARK_NAME' variables on the top of structures_benchmark.py and run it.  
+To run benchmark navigate in your shell to 'Effective-floats-storing' folder and run:
+```shell
+pip install -r requirements.txt
+python structures_benchmark.py
+```
+You cen edit 'TEST_FILE_NAME' and 'BENCHMARK_NAME' variables on the top of structures_benchmark.py.  
 Then in folder <BENCHMARK_NAME> you will see REPORT.txt file which contains the results.  
 To test decompression time navigate in your shell to "app" folder and run:
 ```shell
