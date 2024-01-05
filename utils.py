@@ -3,7 +3,8 @@ import os
 import shutil
 import struct
 from typing import List
-import py7zr
+import tarfile
+import gzip
 
 import bson
 
@@ -97,11 +98,22 @@ def get_size_in_mb(path, folder=False):
 
 
 def compress(source_path, dest_path, folder=False):
-    with py7zr.SevenZipFile(dest_path, 'w') as archive:
-        if folder:
-            archive.writeall(source_path)
-        else:
-            archive.write(source_path)
+    if folder:
+        # Create a temporary tar archive
+        temp_tar_path = str(dest_path) + '.tar'
+        with tarfile.open(temp_tar_path, 'w') as tar:
+            tar.add(source_path, arcname=os.path.basename(source_path))
+
+        # Compress the tar archive using gzip
+        with open(temp_tar_path, 'rb') as f_in, gzip.open(dest_path, 'wb') as f_out:
+            shutil.copyfileobj(f_in, f_out)
+
+        # Delete the temporary tar archive
+        os.remove(temp_tar_path)
+    else:
+        # Compress the single file using gzip
+        with open(source_path, 'rb') as f_in, gzip.open(dest_path, 'wb') as f_out:
+            shutil.copyfileobj(f_in, f_out)
 
 
 def rm_folder_if_exist(results_path):
