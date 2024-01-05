@@ -1,0 +1,2 @@
+To run benchmark please edit 'TEST_FILE_NAME' and 'BENCHMARK_NAME' variables on the top of structures_benchmark.py and run it.  
+Then in folder "ex3_benchmark" you will see REPORT.TXT file which contains the results
