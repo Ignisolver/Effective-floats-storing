@@ -1,2 +1,8 @@
-To run benchmark please edit 'TEST_FILE_NAME' and 'BENCHMARK_NAME' variables on the top of structures_benchmark.py and run it.  
-Then in folder <BENCHMARK_NAME> you will see REPORT.txt file which contains the results.
+To run benchmark in your shell navigate to "Effective-floats-storing" folder
+then type and run
+```shell
+pip install -r requirements.txt
+python3 structures_benchmark.py 
+```
+You can edit 'TEST_FILE_NAME' and 'BENCHMARK_NAME' variables on the top of structures_benchmark.py.  
+To see results open  REPORT.txt in folder <BENCHMARK_NAME>.
