@@ -6,7 +6,7 @@ from utils import rm_folder_if_exist, get_json_dict, ValuesExtractor, save_dict_
     save_values_with_struct, compress, get_size_raport, get_min_size_report, calc_min_size_in_mb, save_report
 
 TEST_FILE_NAME = r'ex3.json'
-BENCHMARK_NAME = "ex3_benchmark"
+BENCHMARK_NAME = "restored_benchmark"
 
 DATA_PATH = Path(r".\data")
 RESULTS_PATH = Path(r'.\results')
@@ -14,16 +14,16 @@ test_file_path = DATA_PATH.joinpath(TEST_FILE_NAME)
 
 
 def do_benchmark(benchmark_name, file_path):
-    results_path = RESULTS_PATH.joinpath(benchmark_name)
-    json_path = results_path.joinpath("raw_json.json")
-    metadata_path = results_path.joinpath("metadata.json")
-    raw_bson_path = results_path.joinpath("bson_with_whole_json.bson")
-    bson_with_only_values_path = results_path.joinpath("bson_with_only_values.bson")
-    struct_packed_folder_path = results_path.joinpath("struct_packed")
-    zipped_json_path = results_path.joinpath("zipped_json.gz")
-    zipped_raw_bson_path = results_path.joinpath("zipped_raw_bson.gz")
-    zipped_bson_with_only_values_path = results_path.joinpath("zipped_bson_with_only_values.gz")
-    zipped_struct_path = results_path.joinpath("zipped_struct.gz")
+    results_path = RESULTS_PATH / benchmark_name
+    json_path = results_path / "raw_json.json"
+    metadata_path = results_path / "metadata.json"
+    raw_bson_path = results_path / "bson_with_whole_json.bson"
+    bson_with_only_values_path = results_path / "bson_with_only_values.bson"
+    struct_packed_folder_path = results_path / "struct_packed"
+    zipped_json_path = results_path / "zipped_json.gz"
+    zipped_raw_bson_path = results_path / "zipped_raw_bson.gz"
+    zipped_bson_with_only_values_path = results_path / "zipped_bson_with_only_values.gz"
+    zipped_struct_path = results_path / "zipped_struct.gz"
     print("START BENCHMARK")
     rm_folder_if_exist(results_path)
     os.mkdir(results_path)

@@ -136,7 +136,7 @@ def save_dict_as_json(dict_, dest_path):
 
 def save_values_with_struct(values_list: List[List[float]], dest_folder_path):
     folder_path = Path(dest_folder_path)
-    os.mkdir(folder_path)
+    Path.mkdir(folder_path)
     for nr, values in enumerate(values_list):
         binary_data = struct.pack(f'!{len(values)}d', *values)
         file_name = f'{nr}.bin'
