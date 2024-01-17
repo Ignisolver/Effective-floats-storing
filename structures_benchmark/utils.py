@@ -1,10 +1,9 @@
 import json
-import os
-import shutil
 import struct
 from typing import List
-import tarfile
-import gzip
+import zipfile
+import os
+import shutil
 
 import bson
 
@@ -13,7 +12,7 @@ from pathlib import Path
 
 BYTES_IN_MEGABYTE = 1000_000
 BYTES_IN_FLOAT = 8
-RESULTS_FILES_PATH = "files"
+
 class ValuesExtractor:
     def __init__(self):
         self.values = []
@@ -97,23 +96,17 @@ def get_size_in_mb(path, folder=False):
     return size_in_mb
 
 
-def compress(source_path, dest_path, folder=False):
+def compress(source_path, dest_path, folder=False, compresslevel=1):
     if folder:
-        # Create a temporary tar archive
-        temp_tar_path = str(dest_path) + '.tar'
-        with tarfile.open(temp_tar_path, 'w') as tar:
-            tar.add(source_path, arcname=os.path.basename(source_path))
+        with zipfile.ZipFile(dest_path, 'w', zipfile.ZIP_DEFLATED, compresslevel=compresslevel) as zipf:
+            for root, _, files in os.walk(source_path):
+                for file in files:
+                    file_path = os.path.join(root, file)
+                    zipf.write(file_path, arcname=os.path.relpath(file_path, source_path))
 
-        # Compress the tar archive using gzip
-        with open(temp_tar_path, 'rb') as f_in, gzip.open(dest_path, 'wb') as f_out:
-            shutil.copyfileobj(f_in, f_out)
-
-        # Delete the temporary tar archive
-        os.remove(temp_tar_path)
     else:
-        # Compress the single file using gzip
-        with open(source_path, 'rb') as f_in, gzip.open(dest_path, 'wb') as f_out:
-            shutil.copyfileobj(f_in, f_out)
+        with open(source_path, 'rb') as f_in, zipfile.ZipFile(dest_path, 'w', zipfile.ZIP_DEFLATED, compresslevel=compresslevel) as zipf:
+            zipf.writestr(os.path.basename(source_path), f_in.read())
 
 
 def rm_folder_if_exist(results_path):
