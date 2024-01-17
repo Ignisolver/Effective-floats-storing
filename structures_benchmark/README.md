@@ -3,7 +3,7 @@ In this benchmark compares storages of json with data in:
 - bson
 - bson with only values
 - binary (packed with python struct module)
-- and compressed all above
+- and compressed all above (you can set compression level)
 To run benchmark navigate in your shell to 'structures_benchmark folder and run:
 ```shell
 pip install -r requirements.txt
